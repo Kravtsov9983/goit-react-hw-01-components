@@ -1,27 +1,26 @@
+import PropTypes from 'prop-types';
+import { Description } from '../Description/Description';
+import { Stats } from '../Stats/Stats';
+import { ProfileBox } from './Profile.styled';
 
-export default function Profile({user}) {
+export const Profile = ({ username, tag, location, avatar, stats }) => {
   return (
-    <div className="profile">
-      <div className="description">
-        <img className="avatar" src={user.avatar} alt="User avatar" />
-        <p className="name">{user.username}</p>
-        <p className="tag">@{user.tag}</p>
-        <p className="location">{user.location}</p>
-      </div>
-      <ul className="stats">
-    <li className="profile-label">
-      <span className="label">Followers</span>
-      <span className="quantity">&nbsp;{user.stats.followers}</span>
-    </li>
-    <li className="profile-label">
-      <span className="label">Views</span>
-      <span className="quantity">&nbsp;{user.stats.views}</span>
-    </li>
-    <li className="profile-label">
-      <span className="label">Likes</span>
-      <span className="quantity">&nbsp;{user.stats.likes}</span>
-    </li>
-      </ul>
-   </div>
-  )
-}
+    <ProfileBox>
+      <Description
+        name={username}
+        tag={tag}
+        location={location}
+        avatar={avatar}
+      />
+      <Stats stats={stats} />
+    </ProfileBox>
+  );
+};
+
+Profile.propTypes = {
+  username: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
+  location: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+  stats: PropTypes.object.isRequired,
+};

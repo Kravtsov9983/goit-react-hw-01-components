@@ -1,16 +1,36 @@
-import StatisticsMenu from "../Statistics/StatisticsMenu"
+import PropTypes from 'prop-types';
+import {
+  StatisticsBox,
+  StatisticsTitle,
+  StatisticsList,
+  StatisticItems,
+  StatisticsTitleText,
+  StatisticsText,
+} from './Statistics.styled';
 
-export default function Statistics({ data }) {
-    const elements = data.map(({id, label, percentage}) => 
-        <StatisticsMenu key={id} label={label} percentage={ percentage} />
-        )
-   {
-        return (
-            <section className="statistics">
-                <h2 className="title">Upload stats</h2>
-                <ul className="stat-list">{ elements }</ul >
-        </section>
-        
-    )
-  }
-}
+export const Statistics = ({ title, stats }) => {
+  const statsItems = stats.map(({ id, label, percentage }) => (
+    <StatisticItems key={id}>
+      <StatisticsTitleText>{label}</StatisticsTitleText>
+      <StatisticsText>{percentage}&#x25;</StatisticsText>
+    </StatisticItems>
+  ));
+
+  return (
+    <StatisticsBox>
+      {title ? <StatisticsTitle>{title}</StatisticsTitle> : ''}
+      <StatisticsList>{statsItems}</StatisticsList>
+    </StatisticsBox>
+  );
+};
+
+Statistics.propTypes = {
+  title: PropTypes.string,
+  stats: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      percentage: PropTypes.number.isRequired,
+    })
+  ).isRequired,
+};
